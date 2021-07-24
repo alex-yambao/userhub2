@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 import {
@@ -8,16 +8,19 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import { Header, UserPosts, UserToDos } from "./components";
+import { Header, UserPosts, UserTodos } from "./components";
+
 import { getUsers, getPostsByUser, getTodosByUser } from "./api";
 
 import { getCurrentUser } from "./auth";
 
 const App = () => {
   const [userList, setUserList] = useState([]);
+
   const [currentUser, setCurrentUser] = useState(getCurrentUser());
+
   const [userPosts, setUserPosts] = useState([]);
-  const [UserToDos, setUserToDos] = useState([]);
+  const [userTodos, setUserTodos] = useState([]);
 
   useEffect(() => {
     getUsers()
@@ -25,14 +28,14 @@ const App = () => {
         setUserList(users);
       })
       .catch((error) => {
-        console.error(error)
+        console.error;
       });
   }, []);
 
   useEffect(() => {
     if (!currentUser) {
       setUserPosts([]);
-      setUserToDos([]);
+      setUserTodos([]);
       return;
     }
 
@@ -41,15 +44,15 @@ const App = () => {
         setUserPosts(posts);
       })
       .catch((error) => {
-        console.error(error)
+        console.error;
       });
 
     getTodosByUser(currentUser.id)
       .then((todos) => {
-        setUserToDos(todos);
+        setUserTodos(todos);
       })
       .catch((error) => {
-        console.error(error)
+        console.error;
       });
   }, [currentUser]);
 
@@ -57,46 +60,50 @@ const App = () => {
     <Router>
       <div id="App">
         <Header
-          userList={ userList }
-          currentUser={ currentUser }
-          setCurrentUser={ setCurrentUser } />
-        {
-          currentUser
-          ? <>
-              <Switch>
-                <Route path="/posts">
-                  <UserPosts
-                    userPosts={ userPosts }
-                    currentUser={ currentUser } />
-                </Route>
-                <Route path="/todos">
-                  <UserToDos
-                    UserToDos={ UserToDos }
-                    currentUser={ currentUser } />
-                </Route>
-                <Route exact path="/">
-                  <h2 style={{
-                    padding: ".5em"
-                  }}>Welcome, { currentUser.username }!</h2>
-                </Route>
-                <Redirect to="/" />
-              </Switch>
-            </>
-          : <>
-              <Switch>
-                <Route exact path="/">
-                  <h2 style={{
-                    padding: ".5em"
-                  }}>Please log in, above.</h2>
-                </Route>
-                <Redirect to="/" />
-              </Switch>
-            </>
-        }
+          userList={userList}
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+        />
+        {currentUser ? (
+          <>
+            <Switch>
+              <Route path="/posts">
+                <UserPosts userPosts={userPosts} currentUser={currentUser} />
+              </Route>
+              <Route path="/todos">
+                <UserTodos userTodos={userTodos} currentUser={currentUser} />
+              </Route>
+              <Route exact path="/">
+                <h2
+                  style={{
+                    padding: ".5em",
+                  }}
+                >
+                  Welcome, {currentUser.username}!
+                </h2>
+              </Route>
+              <Redirect to="/" />
+            </Switch>
+          </>
+        ) : (
+          <>
+            <Switch>
+              <Route exact path="/">
+                <h2
+                  style={{
+                    padding: ".5em",
+                  }}
+                >
+                  Please log in, above.
+                </h2>
+              </Route>
+              <Redirect to="/" />
+            </Switch>
+          </>
+        )}
       </div>
     </Router>
   );
-}
-
+};
 
 ReactDOM.render(<App />, document.getElementById("root"));

@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap");
 
 .user-todos {
   padding: 1em;
-  font-family: 'Libre Baskerville', serif;
+  font-family: "Libre Baskerville", serif;
 }
 
 .user-todos h2 {
-  margin-bottom: .5em;
-  padding-bottom: .5em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.5em;
   border-bottom: 1px solid grey;
 }
 

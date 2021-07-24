@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
 
-const BASE = 'https://jsonplace-univclone.herokuapp.com'
+const BASE = "https://jsonplace-univclone.herokuapp.com";
 
 export async function getUsers() {
   try {
-    const { data } = await axios.get(`${ BASE }/users`);
+    const { data } = await axios.get(`${BASE}/users`);
     return data;
   } catch (error) {
     throw error;
@@ -13,7 +13,7 @@ export async function getUsers() {
 
 export async function getPostsByUser(userId) {
   try {
-    const { data } = await axios.get(`${ BASE }/users/${ userId }/posts`);
+    const { data } = await axios.get(`${BASE}/users/${userId}/posts`);
     return data;
   } catch (error) {
     throw error;
@@ -22,7 +22,7 @@ export async function getPostsByUser(userId) {
 
 export async function getTodosByUser(userId) {
   try {
-    const { data } = await axios.get(`${ BASE }/users/${ userId }/todos`);
+    const { data } = await axios.get(`${BASE}/users/${userId}/todos`);
     return data;
   } catch (error) {
     throw error;
